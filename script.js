@@ -13,6 +13,16 @@ const rotationValues = [
   { minDegree: 331, maxDegree: 360, value: 2 },
 ];
 
+// Challenge names corresponding to each value
+const challengeNames = {
+  1: "Run a Marathon",
+  2: "Read a Book",
+  3: "Cook a New Recipe",
+  4: "Learn a New Language",
+  5: "Take a Trip",
+  6: "Start a Blog"
+};
+
 // Size of each piece
 const data = [16, 16, 16, 16, 16, 16];
 
@@ -63,33 +73,40 @@ let myChart = new Chart(wheel, {
   },
 });
 
-// Object to keep track of how many times each value has been chosen
-const valueCount = {
-  1: 0,
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  6: 0,
+// Check if the arrow is on the border line
+const isOnBorder = (angleValue) => {
+  for (let i of rotationValues) {
+    if (angleValue === i.minDegree || angleValue === i.maxDegree) {
+      return true;
+    }
+  }
+  return false;
 };
 
 // Display value based on the randomAngle
 const valueGenerator = (angleValue) => {
+  if (isOnBorder(angleValue)) {
+    spinAgain();
+    return;
+  }
+
   for (let i of rotationValues) {
     // If the angleValue is between min and max then display it
     if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
-      valueCount[i.value] += 1; // Increment the counter for the chosen value
-      if (valueCount[i.value] > 2) {
-        Swal.fire({
-          title: "Not possible",
-          text: `The challenge ${i.value} is full.`,
-        });
-      } else {
-        Swal.fire({
-          title: "Congratulations!",
-          text: `You took challenge ${i.value}!`,
-        });
-      }
+      const challengeName = challengeNames[i.value];
+      Swal.fire({
+        title: "Congratulations!",
+        text: `You got "${challengeName}". Do you want to accept this challenge?`,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          finalValue.innerHTML = `<p>Challenge "${challengeName}" Accepted!</p>`;
+        } else {
+          spinAgain();
+        }
+      });
       spinBtn.disabled = false;
       break;
     }
@@ -100,8 +117,9 @@ const valueGenerator = (angleValue) => {
 let count = 0;
 // 100 rotations for animation and last rotation for result
 let resultValue = 101;
-// Start spinning
-spinBtn.addEventListener("click", () => {
+
+// Function to start the spinning
+const startSpinning = () => {
   spinBtn.disabled = true;
   // Empty final value
   finalValue.innerHTML = `<p>Good Luck!</p>`;
@@ -128,4 +146,12 @@ spinBtn.addEventListener("click", () => {
       resultValue = 101;
     }
   }, 10);
-});
+};
+
+// Function to trigger spin again
+const spinAgain = () => {
+  setTimeout(startSpinning, 500);
+};
+
+// Start spinning when button is clicked
+spinBtn.addEventListener("click", startSpinning);

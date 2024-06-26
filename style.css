@@ -1,105 +1,146 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: url('npm.jpg') no-repeat center center fixed;
+  background-size: 100%; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row; /* Align children horizontally */
+}
+
+.logo-container {
+  position: absolute;
+  left: 2%;
+  top: 10%;
+}
+
+.logo {
+  width: 5em;
+}
+
+.wrapper {
+  width: 90%;
+  max-width: 34.37em;
+  max-height: 90vh;
+  background-color: rgba(255, 255, 255, 0.5); /* Less transparent for readability */
+  backdrop-filter: blur(4px); /* Reduced blur */
+  position: relative;
+  padding: 3em;
+  border-radius: 1em;
+  box-shadow: 0 4em 5em rgba(27, 8, 53, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#wheel {
+  max-height: inherit;
+  width: inherit;
+  padding: 0;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
   }
-  
+}
+
+#spin-btn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  height: 26%;
+  width: 26%;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  background: radial-gradient(#fdcf3b 50%, #d88a40 85%);
+  color: #c66e16;
+  text-transform: uppercase;
+  font-size: 1.8em;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+img[alt="spinner-arrow"] {
+  position: absolute;
+  width: 4em;
+  top: 45%;
+  right: -8%;
+}
+
+#final-value {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 1.5em;
+  color: #202020;
+  font-weight: 500;
+}
+
+/* New CSS for challenges section */
+.challenges {
+  width: 20%; /* Adjusted width */
+  margin-right: 2em; /* Space between challenges and container */
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 1em;
+  border-radius: 1em;
+  box-shadow: 0 2em 2em rgba(27, 8, 53, 0.1);
+  text-align: left;
+}
+
+.challenges h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  color: #202020;
+}
+
+.challenges ul {
+  list-style: none;
+  padding: 0;
+}
+
+.challenges li {
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+  color: #202020;
+}
+
+.challenges strong {
+  color: #c66e16;
+}
+
+@media screen and (max-width: 768px) {
   body {
-    height: 100vh;
-    background: url('logo.png') no-repeat center center fixed;
-    background-size: 100%; /* Adjust as needed */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; /* Stack elements vertically on small screens */
   }
-  
-  .logo-container {
-    position: absolute;
-    left: 2%;
-    top: 10%;
+
+  .wrapper, .challenges {
+    width: 90%; /* Full width for both sections on small screens */
   }
-  
-  .logo {
-    width: 5em;
+
+  .challenges {
+    margin-right: 0;
+    margin-bottom: 2em; /* Add space between challenges and container */
   }
-  
-  .wrapper {
-    width: 90%;
-    max-width: 34.37em;
-    max-height: 90vh;
-    background-color: rgba(255, 255, 255, 0.5); /* Less transparent for readability */
-    backdrop-filter: blur(4px); /* Reduced blur */
-    position: relative;
-    padding: 3em;
-    border-radius: 1em;
-    box-shadow: 0 4em 5em rgba(27, 8, 53, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #wheel {
-    max-height: inherit;
-    width: inherit;
-    padding: 0;
-  }
-  
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  #spin-btn {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    height: 26%;
-    width: 26%;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 0;
-    background: radial-gradient(#fdcf3b 50%, #d88a40 85%);
-    color: #c66e16;
-    text-transform: uppercase;
-    font-size: 1.8em;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-  }
-  
+
   img[alt="spinner-arrow"] {
-    position: absolute;
-    width: 4em;
-    top: 45%;
-    right: -8%;
+    right: -5%;
   }
-  
-  #final-value {
-    font-size: 1.5em;
-    text-align: center;
-    margin-top: 1.5em;
-    color: #202020;
-    font-weight: 500;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .wrapper {
-      font-size: 12px;
-    }
-  
-    img[alt="spinner-arrow"] {
-      right: -5%;
-    }
-  }
-  
+}
