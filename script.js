@@ -107,7 +107,7 @@ const valueGenerator = (angleValue) => {
       const challengeName = challengeNames[challengeValue];
 
       // Check if the challenge has been chosen the maximum allowed times
-      const maxCount = (challengeValue === 5 || challengeValue === 6) ? 3 : 2;
+      const maxCount = (challengeValue === 6) ? 3 : 2;
       if (challengeCount[challengeValue] >= maxCount) {
         Swal.fire({
           icon: 'warning',
