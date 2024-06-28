@@ -15,12 +15,12 @@ const rotationValues = [
 
 // Challenge names corresponding to each value
 const challengeNames = {
-  1: "Run a Marathon",
-  2: "Read a Book",
-  3: "Cook a New Recipe",
-  4: "Learn a New Language",
-  5: "Take a Trip",
-  6: "Start a Blog"
+  1: "The urban Gardian",
+  2: "The water Gardian",
+  3: "Automating the values displayed in the water meters",
+  4: "Safety of materials and components",
+  5: "Spaghetti problem in 3D printing",
+  6: "Identifying the position of workshop tools"
 };
 
 // Size of each piece
@@ -73,6 +73,16 @@ let myChart = new Chart(wheel, {
   },
 });
 
+// Object to track the count of each challenge
+const challengeCount = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0
+};
+
 // Check if the arrow is on the border line
 const isOnBorder = (angleValue) => {
   for (let i of rotationValues) {
@@ -93,20 +103,35 @@ const valueGenerator = (angleValue) => {
   for (let i of rotationValues) {
     // If the angleValue is between min and max then display it
     if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
-      const challengeName = challengeNames[i.value];
-      Swal.fire({
-        title: "Congratulations!",
-        text: `You got "${challengeName}". Do you want to accept this challenge?`,
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          finalValue.innerHTML = `<p>Challenge "${challengeName}" Accepted!</p>`;
-        } else {
+      const challengeValue = i.value;
+      const challengeName = challengeNames[challengeValue];
+
+      // Check if the challenge has been chosen the maximum allowed times
+      const maxCount = (challengeValue === 5 || challengeValue === 6) ? 3 : 2;
+      if (challengeCount[challengeValue] >= maxCount) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Challenge Full',
+          text: `The challenge "${challengeName}" has been chosen the maximum allowed times and is now full. Please spin again.`,
+        }).then(() => {
           spinAgain();
-        }
-      });
+        });
+      } else {
+        Swal.fire({
+          title: "Congratulations!",
+          text: `You got "${challengeName}". Do you want to accept this challenge?`,
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            challengeCount[challengeValue] += 1;
+            finalValue.innerHTML = `<p>Challenge "${challengeName}" Accepted!</p>`;
+          } else {
+            spinAgain();
+          }
+        });
+      }
       spinBtn.disabled = false;
       break;
     }
